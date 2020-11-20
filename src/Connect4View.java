@@ -25,7 +25,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.shape.Circle;
-
+/**
+ * This class implements a JavaFX GUI. It consists of a visual representation
+ * of a "Connect4" game. 
+ * 
+ * @author Alexander Buell
+ *
+ */
 public class Connect4View extends Application implements Observer{
 
 	@Override
@@ -33,7 +39,15 @@ public class Connect4View extends Application implements Observer{
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	/**
+	 * Purpose: This method is the main entry point for all JavaFX applications.
+	 *          The start method is called after the init method has returned,
+	 *          and after the system is ready for the application to begin running.
+	 *           
+	 * @param primaryStage, which represents the primary stage for this application.
+	 *      
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
@@ -42,18 +56,12 @@ public class Connect4View extends Application implements Observer{
 		Menu menu = new Menu("File");
 		MenuBar menuBar = new MenuBar(menu);
 		MenuItem newGame = new MenuItem("New Game");
-		
-		
-		 
 		 
 		Dialog<String> dialog = new Dialog<String>();
 		dialog.setTitle("Network Setup");
-		//HBox box = new HBox();
-		//RadioButton server = new RadioButton("Server");
-		//server.setText("Server");
-		RadioButton client = new RadioButton("Client");
-		//box.getChildren().addAll(server, client);
-		//client.setText("Client");
+		
+		
+		
 		newGame.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -64,12 +72,13 @@ public class Connect4View extends Application implements Observer{
 	                @Override
 	                public Node createButtonBar() {
 	                    HBox box = new HBox(5);
+	                    Label label = new Label("Create:");
 	                    RadioButton server = new RadioButton("Server");
 	                    RadioButton client = new RadioButton("Client");
 	                    
 	                    
 	                    box.getChildren().add(super.createButtonBar());
-	                    box.getChildren().addAll(server, client);
+	                    box.getChildren().addAll(label,server, client);
 	                    return box ;
 	                }
 	            };
