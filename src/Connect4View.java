@@ -14,6 +14,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -35,7 +36,7 @@ import javafx.scene.shape.Circle;
 public class Connect4View extends Application implements Observer{
 
 	private Connect4Model model;
-	private Connect4Model controller;
+	private Connect4Controller controller;
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -43,32 +44,18 @@ public class Connect4View extends Application implements Observer{
 		
 	}
 	
-	/**
-	 * Purpose: This method is the main entry point for all JavaFX applications.
-	 *          The start method is called after the init method has returned,
-	 *          and after the system is ready for the application to begin running.
-	 *           
-	 * @param primaryStage, which represents the primary stage for this application.
-	 *      
-	 */
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
-		this.model = new Connect4Model();
-		this.controller = new Connect4Model();
-		
-		
-		BorderPane pane = new BorderPane();
-		
-		GridPane gPane = new GridPane();
+	private MenuBar buildMenuBar(BorderPane bp) {
+		System.out.println("Hi");
 		Menu menu = new Menu("File");
 		MenuBar menuBar = new MenuBar(menu);
 		MenuItem newGame = new MenuItem("New Game");
-		 
-		Dialog<String> dialog = new Dialog<String>();
-		dialog.setTitle("Network Setup");
+		menu.getItems().add(newGame);
 		
-		
+		newGame.setOnAction((event -> {
+			Connect4Controller controller = new Connect4Controller();
+			buildBoard(controller, bp);
+			
+		}));
 		
 		newGame.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -76,6 +63,8 @@ public class Connect4View extends Application implements Observer{
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				 //Stage other = new Stage();
+				Dialog<String> dialog = new Dialog<String>();
+				dialog.setTitle("Network Setup");
 				DialogPane dPane = new DialogPane() {
 	                @Override
 	                public Node createButtonBar() {
@@ -98,15 +87,21 @@ public class Connect4View extends Application implements Observer{
 			
 		});
 		
-		menu.getItems().add(newGame);
+		return menuBar;
 		
-		
+	}
+	
+	private void buildBoard(Connect4Controller c, BorderPane bp) {
+		// TODO Auto-generated method stub
+		MenuBar menuBar = buildMenuBar(bp);
+		GridPane gPane = new GridPane();
+		bp.setTop(menuBar);
 		
 		gPane.setBackground(new Background(new BackgroundFill(Color.BLUE, new CornerRadii(0), Insets.EMPTY)));
 		gPane.setVgap(8);
 		gPane.setHgap(8);
 		gPane.setPadding(new Insets(8));
-	
+		
 		for(int i = 0; i < 7 ; i++) {
 			for(int j = 0; j < 6; j++) {
 				Circle circle = new Circle();
@@ -116,8 +111,41 @@ public class Connect4View extends Application implements Observer{
 				gPane.add(circle, i , j);
 			}
 		}
-		pane.setTop(menuBar);
-		pane.setCenter(gPane);
+		bp.setTop(menuBar);
+		bp.setCenter(gPane);
+		
+		
+		gPane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+			int colNum = (int) event.getX();
+			System.out.println(colNum);
+		});
+		
+		
+		
+	
+		
+		
+	}
+
+	/**
+	 * Purpose: This method is the main entry point for all JavaFX applications.
+	 *          The start method is called after the init method has returned,
+	 *          and after the system is ready for the application to begin running.
+	 *           
+	 * @param primaryStage, which represents the primary stage for this application.
+	 *      
+	 */
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		// TODO Auto-generated method stub
+		this.model = new Connect4Model();
+		this.controller = new Connect4Controller();
+		
+		BorderPane pane = new BorderPane();
+		
+		buildBoard(controller, pane);
+		
+		
 		Scene scene = new Scene(pane, 344, 324);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Connect 4");
