@@ -61,7 +61,7 @@ public class Connect4Controller {
 			for(int increment = inc; increment >0; increment--) {
 				game.move(col, r);
 			}
-			game.move(col, y);
+			//game.move(col, y);
 			inc++;
 		}
 	
