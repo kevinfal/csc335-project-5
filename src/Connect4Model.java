@@ -180,12 +180,28 @@ public class Connect4Model {
 		}
 		return 0;
 	}
+	
 	/**
-	 * 
-	 * @return
+	 * Checks for a diagonal win, check all possible directions
+	 * Checks top left to bottom right and bottom left to top right
+	 * @return 0 if no player has won, 1 if red has won, 2 if yellow has won
 	 */
 	private int checkDiagonals() {
-		return checkDiagTB1();
+		//Checks for diagonal bottom left to top right
+		int check = checkDiagBT1();
+		if(check != 0)
+			return check;
+		check = checkDiagBT2();
+		if(check != 0)
+			return check;
+		//Checks for top to bottom
+		check = checkDiagTB1();
+		if(check != 0)
+			return check;
+		check = checkDiagTB2();
+		if(check != 0)
+			return check;
+		return check; // check will == 0, no one won diagonally
 	}
 	
 	/**
@@ -273,7 +289,6 @@ public class Connect4Model {
 					}
 				}
 			}
-			//System.out.println();
 		}
 		return 0;
 	}
@@ -290,8 +305,6 @@ public class Connect4Model {
 			int count = 0;
 			for(int row = startRow,col = 0; row >= 0 && col < BOARD_HEIGHT; col++, row--) {
 				count++;
-				System.out.print(board.get(col)[row]);
-
 				//can't check previous if col = 0
 				if(col == 0)
 					continue;
@@ -318,10 +331,50 @@ public class Connect4Model {
 					}
 				}
 			}
-			System.out.println();
 		}
 		//nobody has won
 		return 0;
 	}
 	
+	/**
+	 * Check if player has won a diagonal
+	 * victory, checking from top left to bottom right
+	 * ONLY CHECKS DIAGONALS STARTING AT COLUMNS 1 THROUGH 3
+	 * AND ALL DIAGONALS THAT START AT ONLY ROW 5
+	 * @return 0 if no player has won, 1 if red has won, 2 if yellow has won
+	 */
+	private int checkDiagTB2() {
+		for(int startCol = 1; startCol <= 3; startCol++) {
+			int count = 0;
+			for(int row = 5,col = startCol; row >= 0 && col < BOARD_WIDTH; col++, row--) {
+				count++;
+				//can't check previous if col = 0
+				if(row == 5)
+					continue;
+				else {
+					//to get the previous subtract row and column by 1
+					char prev = board.get(col - 1)[row + 1];
+					char curr = board.get(col)[row];
+					//not a repeating character
+					if(prev != curr)
+						count = 1;
+					//if there are 4 repeating
+					if(count == 4) {
+						//4 empty/white spaces
+						if(curr == 'w') {
+							continue;//change to continue if want bigger board
+						}
+						//4 red tokens
+						else if(curr == 'r')
+							return 1;
+						//4 yellow tokens
+						else if(curr == 'y')
+							return 2;
+					}
+				}
+			}
+		}
+		//nobody has won
+		return 0;
+	}
 }

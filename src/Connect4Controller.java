@@ -64,6 +64,8 @@ public class Connect4Controller {
 			//game.move(col, y);
 			inc++;
 		}
+		game.move(3, r);
+		game.move(3, r);
 	
 		System.out.println(game);
 		System.out.println(game.isGameOver());
