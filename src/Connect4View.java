@@ -34,6 +34,9 @@ import javafx.scene.shape.Circle;
  */
 public class Connect4View extends Application implements Observer{
 
+	private Connect4Model model;
+	private Connect4Model controller;
+
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
@@ -51,7 +54,12 @@ public class Connect4View extends Application implements Observer{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
+		this.model = new Connect4Model();
+		this.controller = new Connect4Model();
+		
+		
 		BorderPane pane = new BorderPane();
+		
 		GridPane gPane = new GridPane();
 		Menu menu = new Menu("File");
 		MenuBar menuBar = new MenuBar(menu);
