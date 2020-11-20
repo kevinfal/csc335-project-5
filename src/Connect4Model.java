@@ -7,7 +7,8 @@ import java.util.HashMap;
 public class Connect4Model {
 	
 	private int turns = 0;
-	public static final int BOARD_DIM = 7;
+	public static final int BOARD_WIDTH = 7;
+	public static final int BOARD_HEIGHT = 6;
 	/*
 	 * The key represents the column to index
 	 * Value holds array of characters that are in that column
@@ -29,9 +30,9 @@ public class Connect4Model {
 	 * fills the board to be blank, full of 'w' chars
 	 */
 	public void fillBoard() {
-		for(int col = 0; col< BOARD_DIM; col++) {
-			Character[] added = new Character[BOARD_DIM];
-			for(int i = 0; i<BOARD_DIM; i++)
+		for(int col = 0; col< BOARD_WIDTH; col++) {
+			Character[] added = new Character[BOARD_WIDTH];
+			for(int i = 0; i<BOARD_HEIGHT; i++)
 				added[i] = 'w';
 			board.put(col,added);
 		}
@@ -64,9 +65,9 @@ public class Connect4Model {
 		Character[] column = board.get(boardCol);
 		int i = 0;
 		//move up the column until an an empty/'w' is found;
-		//if there is not one, move is 
+		//if there is not one, move is valid
 		for( ; column[i] != 'w'; i++)
-			if(i >= BOARD_DIM -1)
+			if(i >= BOARD_HEIGHT -1)
 				return -1;
 		return i; 
 	}
@@ -78,17 +79,21 @@ public class Connect4Model {
 	public int isGameOver() {
 		int check = 0;
 		//check rows first
-		check = checkRows();
-		if(checkRows() != 0) {
-			return check;
-		}
-		//then check columns
-		check = checkCols();
+//		check = checkRows();
+//		if(check != 0) {
+//			return check;
+//		}
+//		//then check columns
+//		check = checkCols();
+//		if(check != 0) {
+//			return check;
+//		}
+		check = checkDiagonals();
+		if(check != 0) {
+			System.out.println("won1"); 
 
-		if(checkCols() != 0) {
 			return check;
 		}
-		System.out.println("won1"); 
 		return 0;
 	}
 	/**
@@ -97,10 +102,10 @@ public class Connect4Model {
 	 */
 	private int checkRows() {
 		//iterate rows
-		for(int row = 0; row < BOARD_DIM; row++) {
+		for(int row = 0; row < BOARD_HEIGHT; row++) {
 			int count = 1;
 			//get index of row from each column
-			for(int col = 0; col< BOARD_DIM; col++) {
+			for(int col = 0; col< BOARD_WIDTH; col++) {
 				count++;
 				//check if 0, can't check prev if 0
 				if(col == 0)
@@ -137,12 +142,12 @@ public class Connect4Model {
 	 * @return 0 if no player has won, 1 if red has won, 2 if yellow has won
 	 */
 	private int checkCols() {
-		for(int col = 0; col < BOARD_DIM; col++) {
+		for(int col = 0; col < BOARD_WIDTH; col++) {
 			Character[] column = board.get(col);
 			//check for repeats of 4
 			int count = 1;
 			//iterate through column
-			for(int i = 0; i < BOARD_DIM; i++) {
+			for(int i = 0; i < BOARD_HEIGHT; i++) {
 				count++;
 				if(i == 0)
 					continue;
@@ -171,9 +176,58 @@ public class Connect4Model {
 		}
 		return 0;
 	}
-	
+	/**
+	 * 
+	 * @return
+	 */
 	private int checkDiagonals() {
+		return checkDiagBT1();
+	}
+	
+	/**
+	 * Check if player has won a diagonal
+	 * victory, checking from bottom left to top right
+	 * ONLY CHECKS DIAGONALS THAT START A COLUMN 1
+	 * AND ALL DIAGONALS THAT START AT ROWS 0 TO 3
+	 * @return 0 if no player has won, 1 if red has won, 2 if yellow has won
+	 */
+	private int checkDiagBT1() {
+		//starting column is always 0;
+		//This function only checks the diagonals that start on rows 0 through 3
+		for(int startRow = 0; startRow <= 3; startRow++) {
+			int count = 1;
+			for(int col = 0, row = startRow; col < BOARD_WIDTH && row < BOARD_HEIGHT; col++,row++) {
+				count++;
+				//can't check previous if col = 0
+				if(col == 0)
+					continue;
+				else {
+					//to get the previous subtract row and column by 1
+					char prev = board.get(col - 1)[row -1];
+					char curr = board.get(col)[row];
+					//not a repeating character
+					if(prev != curr)
+						count = 1;
+					//if there are 4 repeating
+					if(count == 4) {
+						//4 empty/white spaces
+						if(curr == 'w') {
+							return 0;//change to continue if want bigger board
+						}
+						//4 red tokens
+						else if(curr == 'r')
+							return 1;
+						//4 yellow tokens
+						else if(curr == 'y')
+							return 2;
+							
+					}
+				}
+			}
+		}
 		return 0;
 	}
+	
+	
 	
 }
