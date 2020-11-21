@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.application.Application;
@@ -47,13 +48,30 @@ public class Connect4View extends Application implements Observer{
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		Connect4MoveMessage lastMove = (Connect4MoveMessage) arg;
-		//getLastMove(lastMove);
-		
-		
-		
-		
-		
+		int color = lastMove.getColor();   //1 for Yellow, 2 for Red
+		int rowNum = lastMove.getRow();
+		int colNum = lastMove.getColumn();
+		System.out.println("Hi!!");
+		if(color == 1) {
+			//Set color to yellow
+			circles[rowNum][colNum].setFill(Color.YELLOW);
+			
+						
+	    }else if (color == 2) {
+	    	//Set color to red
+			circles[rowNum][colNum].setFill(Color.RED);
+						
+		}else {
+			//Not valid
+						
+	    }
+					
+				
+
 	}
+		
+		
+
 	
 
 	
@@ -102,7 +120,7 @@ public class Connect4View extends Application implements Observer{
 	 */
 	private void buildBoard(Connect4Controller c, BorderPane bp) {
 		// TODO Auto-generated method stub
-		
+		circles = new Circle[7][6];
 		MenuBar menuBar = buildMenuBar(bp);
 		GridPane gPane = new GridPane();
 		bp.setTop(menuBar);
@@ -119,9 +137,14 @@ public class Connect4View extends Application implements Observer{
 				circle.setRadius(20);
 				
 				gPane.add(circle, i , j);
+				
+				
 				circles[i][j] = circle;
+				
+				//circles[j][i] = circle;
 			}
 		}
+		System.out.println(Arrays.deepToString(circles));
 		bp.setTop(menuBar);
 		bp.setCenter(gPane);
 		
@@ -162,13 +185,16 @@ public class Connect4View extends Application implements Observer{
 			
 		}else if (n <= 292) {
 			column = 5;
+		}else {
+			column = 6;
 		}
 		
 		c.humanTurn(column);
-		//turn(bp, c);
+	
+		
 		
 		c.computerTurn();
-		//turn(bp, c);
+	
 			
 	}
 	
