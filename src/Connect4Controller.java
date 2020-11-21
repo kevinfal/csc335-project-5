@@ -13,25 +13,21 @@ public class Connect4Controller {
 		this.model = model;
 	}
 	
-	//make move
-	public boolean move(int col, char color) {
-		return model.move(col,color);
-	}
 	/**
 	 * Determines whether someone has won or not
 	 * @return 0 if no player has won, 1 if red has won, 2 if yellow has won
 	 */
 	public int isGameOver() {
-		/*
-		 * TODO CHECK IF WANT BOOLEAN OR NUMBER+NOTIFY FOR IMPLEMENTATION
-		 */
 		return model.isGameOver();
 	}
-	/*
-	 * REMOVE LATER
+	
+	/**
+	 * Checks to see if anyone has won yet, and the board is not full
+	 * @return true if a player has won or if the board is full
 	 */
-	public HashMap<Integer,Character[]> getBoard() {
-		return model.getBoard();
+	public boolean isGameOverBoolean() {
+		int check = model.isGameOver();
+		return check > 0 || check == -1;
 	}
 	
 	/**
@@ -58,9 +54,12 @@ public class Connect4Controller {
 	 * @return True if move was successful, false if not a valid move
 	 */
 	public boolean humanTurn(int col) {
+		//if col is out of bounds
+		if(col > 6 || col < 0)
+			return false;
 		int turn = model.getTurns();
 		boolean even = turn % 2 == 0;
-		if(even)
+		if(even) // even turn, use yellow
 			return model.move(col, 'r');
 		else //odd turn, use yellow
 			return model.move(col, 'y');
@@ -79,7 +78,6 @@ public class Connect4Controller {
 		}
 		if(moved)
 			return true;
-		
 		return false;
 	}
 

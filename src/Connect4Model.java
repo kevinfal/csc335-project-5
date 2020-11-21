@@ -1,10 +1,11 @@
 import java.util.HashMap;
+import java.util.Observable;
 /**
  * 
  * @author Kevin Falconett
  *
  */
-public class Connect4Model {
+public class Connect4Model extends Observable{
 	
 	private int turns = 1;
 	public static final int BOARD_WIDTH = 7;
