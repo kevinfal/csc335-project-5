@@ -96,4 +96,5 @@ public class Connect4Controller {
 		System.out.println(game.isGameOver());
 		
 	}
+
 }

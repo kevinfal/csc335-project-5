@@ -5,8 +5,16 @@
 /Connect4MoveMessage.class
 /Connect4View$1$1.class
 /Connect4View$1.class
+<<<<<<< HEAD
 /Connect4View.class
 =======
 /Connect4View$1$1.class
 /Connect4View$1.class
 >>>>>>> origin/Alex
+=======
+/Connect4View$gameDialog$1.class
+/Connect4View$gameDialog$2.class
+/Connect4View$gameDialog.class
+/Connect4Model.class
+/Connect4Controller.class
+>>>>>>> Alex
