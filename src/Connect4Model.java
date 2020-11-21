@@ -60,10 +60,13 @@ public class Connect4Model extends Observable{
 		if(row == -1)//move failed, don't notify observers
 			return false;
 		//move is possible, add and notify observers and update turns
+		
 		turns++;
 		Character[] column = board.get(boardCol);
-		column[row] = color;
+		column[row] = color;		
 		board.put(boardCol, column); 
+		Connect4MoveMessage notify = new Connect4MoveMessage(row,boardCol,color);
+		notifyObservers(notify);
 		return true;
 	}
 	/**
@@ -99,6 +102,7 @@ public class Connect4Model extends Observable{
 		if(check != 0) {
 			return check;
 		}
+		//Check diagonal wins
 		check = checkDiagonals();
 		if(check != 0) {
 			return check;

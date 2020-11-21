@@ -17,8 +17,6 @@ class Connect4ControllerTest {
 		String before = game.toString();
 		game.computerTurn();
 		String after = game.toString();
-		System.out.println(before);
-		System.out.println(after);
 		assertTrue(before.compareTo(after) == 0);
 	}
 		
@@ -68,6 +66,15 @@ class Connect4ControllerTest {
 		assertTrue(game.isGameOverBoolean());
 	}
 	
+	@Test 
+	void diagonalWinTB2(){
+		Connect4Controller game = new Connect4Controller(new Connect4Model());
+		for(int i = 0; i < 5; i++)
+			game.move(0, 'n');
+		System.out.println(game);
+		assertTrue(false);
+	}
+	
 	@Test
 	void diagonalWinTB() {
 		Connect4Controller game = new Connect4Controller(new Connect4Model());
@@ -99,7 +106,14 @@ class Connect4ControllerTest {
 	
 	@Test
 	void verticalWin() {
-		
+		Connect4Controller game = new Connect4Controller(new Connect4Model());
+		for(int i = 0; i < 3; i++) {
+			game.humanTurn(0);
+			game.humanTurn(1);
+		}
+		game.humanTurn(0);
+		assertTrue(game.isGameOverBoolean());
 	}
+	
 	
 }

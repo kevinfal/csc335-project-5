@@ -29,7 +29,15 @@ public class Connect4Controller {
 		int check = model.isGameOver();
 		return check > 0 || check == -1;
 	}
-	
+	/**
+	 * This method manually places a color at a column
+	 * @param boardCol - color of token
+	 * @param color - color of token
+	 * @return true if move was successful
+	 */
+	public boolean move(int boardCol, char color) {
+		return model.move(boardCol, color);
+	}
 	/**
 	 * This is really only for testing
 	 * Prints out every spot on the board in
