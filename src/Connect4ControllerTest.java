@@ -69,10 +69,17 @@ class Connect4ControllerTest {
 	@Test 
 	void diagonalWinTB2(){
 		Connect4Controller game = new Connect4Controller(new Connect4Model());
-		for(int i = 0; i < 5; i++)
-			game.move(0, 'n');
+		
+		int increment = 5;
+		for(int c = 0; c < 4; c++){
+			for(int inc = increment; inc > 0; inc--)
+				game.move(c, 'n');
+			increment--;
+		}
+		for(int i = 0; i < 4; i++)
+			game.move(i,'r');
 		System.out.println(game);
-		assertTrue(false);
+		assertTrue(game.isGameOver() == 1);
 	}
 	
 	@Test
@@ -113,6 +120,17 @@ class Connect4ControllerTest {
 		}
 		game.humanTurn(0);
 		assertTrue(game.isGameOverBoolean());
+	}
+	@Test
+	void fullBoard() {
+		Connect4Controller game = new Connect4Controller(new Connect4Model());
+
+		for(int c = 0; c < 7; c++) {
+			for(int r = 0; r < 6; r++)
+				game.move(c, 'n');
+		}
+		
+		assertTrue(game.isGameOver() == -1);
 	}
 	
 	

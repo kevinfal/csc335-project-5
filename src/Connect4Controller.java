@@ -89,18 +89,4 @@ public class Connect4Controller {
 		return false;
 	}
 
-	public static void main(String[] args) {
-		Connect4Controller game = new Connect4Controller(new Connect4Model());
-		char r = 'r';
-		char y = 'y';
-		int inc = -1;
-		for(int i = 0; i < 42; i++) {
-			game.computerTurn();
-		}
-	
-		System.out.println(game);
-		System.out.println(game.isGameOver());
-		
-	}
-
 }
