@@ -170,7 +170,7 @@ public class Connect4View extends Application implements Observer{
 	 * @param c, which represents the controller.
 	 */
 	private void checkIfOver(Connect4Controller c) {
-		if(c.isGameOver()) {
+		if(c.isGameOver()> 0) {
 			Alert a = new Alert(Alert.AlertType.INFORMATION);
 			a.setTitle("Message");
 			a.setContentText("You won!");
