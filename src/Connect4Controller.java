@@ -1,5 +1,5 @@
 import java.util.HashMap;
-
+import java.util.Random;
 /**
  * 
  * @author Kevin Falconett
@@ -51,24 +51,49 @@ public class Connect4Controller {
 		}
 		return returned;
 	}
+	/**
+	 * Adds a token to the board, to be used by the
+	 * players. Takes column input
+	 * @param col - column to add a token to
+	 * @return True if move was successful, false if not a valid move
+	 */
+	public boolean humanTurn(int col) {
+		int turn = model.getTurns();
+		boolean even = turn % 2 == 0;
+		if(even)
+			return model.move(col, 'r');
+		else //odd turn, use yellow
+			return model.move(col, 'y');
+	}
+	/**
+	 * Simulates a "turn", places a token
+	 * in a random legal spot on the board
+	 * @return true if a move was made, false if there was no possible move
+	 */
+	public boolean computerTurn() {
+		int col = new Random().nextInt(6);
+		boolean moved = humanTurn(col);
+		while(moved == false && model.isGameOver() == 0 ) {
+			col = new Random().nextInt(6);
+			moved = humanTurn(col);
+		}
+		if(moved)
+			return true;
+		
+		return false;
+	}
 
 	public static void main(String[] args) {
 		Connect4Controller game = new Connect4Controller(new Connect4Model());
 		char r = 'r';
 		char y = 'y';
 		int inc = -1;
-		for(int col = 0; col < 7; col++) {
-			for(int increment = inc; increment >0; increment--) {
-				game.move(col, r);
-			}
-			//game.move(col, y);
-			inc++;
+		for(int i = 0; i < 42; i++) {
+			game.computerTurn();
 		}
-		game.move(3, r);
-		game.move(3, r);
 	
 		System.out.println(game);
 		System.out.println(game.isGameOver());
-
+		
 	}
 }

@@ -6,7 +6,7 @@ import java.util.HashMap;
  */
 public class Connect4Model {
 	
-	private int turns = 0;
+	private int turns = 1;
 	public static final int BOARD_WIDTH = 7;
 	public static final int BOARD_HEIGHT = 6;
 	/*
@@ -29,6 +29,10 @@ public class Connect4Model {
 	 */
 	public HashMap<Integer,Character[]> getBoard(){
 		return board;
+	}
+	
+	public int getTurns() {
+		return turns;
 	}
 	
 	/**
@@ -54,7 +58,8 @@ public class Connect4Model {
 		int row = tryMove(boardCol);
 		if(row == -1)//move failed, don't notify observers
 			return false;
-		//move is possible, add and notify observers
+		//move is possible, add and notify observers and update turns
+		turns++;
 		Character[] column = board.get(boardCol);
 		column[row] = color;
 		board.put(boardCol, column); 
@@ -79,25 +84,26 @@ public class Connect4Model {
 	
 	/**
 	 * Check if a player has won
-	 * @return 0 if no p layer has won, 1 if red has won, 2 if yellow has won
+	 * @return 0 if no p layer has won, 1 if red has won, 2 if yellow has won, or -1 if board is full
 	 */
 	public int isGameOver() {
 		int check = 0;
 		//check rows first
-//		check = checkRows();
-//		if(check != 0) {
-//			return check;
-//		}
-//		//then check columns
-//		check = checkCols();
-//		if(check != 0) {
-//			return check;
-//		}
+		check = checkRows();
+		if(check != 0) {
+			return check;
+		}
+		//then check columns
+		check = checkCols();
+		if(check != 0) {
+			return check;
+		}
 		check = checkDiagonals();
 		if(check != 0) {
 			return check;
 		}
-		System.out.println("wtf");
+		if(boardFull())
+			return -1;
 		return 0;
 	}
 	/**
@@ -376,5 +382,17 @@ public class Connect4Model {
 		}
 		//nobody has won
 		return 0;
+	}
+	
+	private boolean boardFull() {
+		for(int col = 0; col < 7; col ++) {
+			Character[] column = board.get(col);
+			for(int row = 0; row < BOARD_HEIGHT; row++) {
+				Character curr = column[row];
+				if(curr == 'w')
+					return false;
+			}
+		}
+		return true;
 	}
 }
