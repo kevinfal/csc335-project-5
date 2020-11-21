@@ -41,14 +41,23 @@ public class Connect4View extends Application implements Observer{
 
 	private Connect4Model model;
 	private Connect4Controller controller;
+	private Circle[][] circles;
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
+		Connect4MoveMessage lastMove = (Connect4MoveMessage) arg;
+		//getLastMove(lastMove);
+		
+		
+		
 		
 		
 	}
 	
+
+	
+
 	/**
 	 * Takes a BorderPane object as an argument and adds a Menu and
 	 * MenuItem of “New Game” to build a menu bar.
@@ -93,6 +102,7 @@ public class Connect4View extends Application implements Observer{
 	 */
 	private void buildBoard(Connect4Controller c, BorderPane bp) {
 		// TODO Auto-generated method stub
+		
 		MenuBar menuBar = buildMenuBar(bp);
 		GridPane gPane = new GridPane();
 		bp.setTop(menuBar);
@@ -109,6 +119,7 @@ public class Connect4View extends Application implements Observer{
 				circle.setRadius(20);
 				
 				gPane.add(circle, i , j);
+				circles[i][j] = circle;
 			}
 		}
 		bp.setTop(menuBar);
@@ -119,7 +130,7 @@ public class Connect4View extends Application implements Observer{
 			int n = (int) event.getX();
 			checkPos(c,bp,n);
 		});
-			
+		
 	}
 	
 	/**
@@ -160,6 +171,9 @@ public class Connect4View extends Application implements Observer{
 		//turn(bp, c);
 			
 	}
+	
+	
+	
 	
 	
 	
