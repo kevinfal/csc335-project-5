@@ -60,7 +60,7 @@ public class Connect4View extends Application implements Observer{
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				 //Stage other = new Stage();
-				DialogPane pane = new DialogPane() {
+				DialogPane dPane = new DialogPane() {
 	                @Override
 	                public Node createButtonBar() {
 	                    HBox box = new HBox(5);
@@ -69,10 +69,11 @@ public class Connect4View extends Application implements Observer{
 	                    
 	                    
 	                    box.getChildren().add(super.createButtonBar());
-	                    box.getChildren().add(new Label("Additional text"));
+	                    box.getChildren().addAll(server, client);
 	                    return box ;
 	                }
 	            };
+	             dialog.setDialogPane(dPane);
 				 dialog.initModality(Modality.APPLICATION_MODAL);
 				 dialog.show();
 				
