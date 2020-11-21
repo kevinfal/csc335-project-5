@@ -64,7 +64,7 @@ public class Connect4View extends Application implements Observer{
 		menu.getItems().add(newGame);
 		
 		newGame.setOnAction((event -> {
-			Connect4Controller controller = new Connect4Controller();
+			Connect4Controller controller = new Connect4Controller(model);
 			buildBoard(controller, bp);
 			
 		}));
@@ -191,7 +191,7 @@ public class Connect4View extends Application implements Observer{
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		this.model = new Connect4Model();
-		this.controller = new Connect4Controller();
+		this.controller = new Connect4Controller(model);
 		
 		BorderPane pane = new BorderPane();
 		
