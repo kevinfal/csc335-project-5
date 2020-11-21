@@ -67,7 +67,7 @@ public class Connect4Model extends Observable{
 		board.put(boardCol, column); 
 		Connect4MoveMessage notify = new Connect4MoveMessage(row,boardCol,color);
 		notifyObservers(notify);
-		System.out.println("happening");
+		System.out.println("notified");
 		return true;
 	}
 	/**

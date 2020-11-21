@@ -232,7 +232,7 @@ public class Connect4View extends Application implements Observer{
 		// TODO Auto-generated method stub
 		this.model = new Connect4Model();
 		this.controller = new Connect4Controller(model);
-		model.addObserver(this);
+		model.addObserver(this);		
 		BorderPane pane = new BorderPane();
 		
 		buildBoard(controller, pane);
