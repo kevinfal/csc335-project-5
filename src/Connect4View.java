@@ -78,7 +78,7 @@ public class Connect4View extends Application implements Observer{
 
 	/**
 	 * Takes a BorderPane object as an argument and adds a Menu and
-	 * MenuItem of “New Game” to build a menu bar.
+	 * MenuItem of New Game to build a menu bar.
 	 * 
 	 * @param bp, which represents a borderPane object.
 	 *
@@ -232,7 +232,7 @@ public class Connect4View extends Application implements Observer{
 		// TODO Auto-generated method stub
 		this.model = new Connect4Model();
 		this.controller = new Connect4Controller(model);
-		
+		model.addObserver(this);
 		BorderPane pane = new BorderPane();
 		
 		buildBoard(controller, pane);
